@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/nav_champions"
+                android:icon="@drawable/champions"
+                android:title="@string/championsLeague" />
+        <item
+                android:id="@+id/nav_premier"
+                android:icon="@drawable/premier"
+                android:title="@string/premierleague" />
+        <item
+                android:id="@+id/nav_serieA"
+                android:icon="@drawable/brazil"
+                android:title="@string/brazilSerieA" />
+        <item
+                android:id="@+id/nav_worldCup"
+                android:icon="@drawable/worldcup"
+                android:title="@string/worldCup" />
+
+
+
+    </group>
+</menu>
