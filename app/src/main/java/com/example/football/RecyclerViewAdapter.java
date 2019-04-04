@@ -43,6 +43,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View view = LayoutInflater.from(mLayout.getContext()).inflate(R.layout.layout_listitem,mLayout,false);
         ViewHolder holder = new ViewHolder(view);
 
+        for(int ih=0; ih<10;ih++){
+
+
+        }
+
         return holder;
     }
 
@@ -79,7 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
-            imagename = itemView.findViewById(R.id.picture);
+            imagename = itemView.findViewById(R.id.leftIcon);
             parentlayout = itemView.findViewById(R.id.parent_layout);
 
         }

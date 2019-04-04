@@ -14,7 +14,7 @@
             android:id="@+id/teamName"
             android:textColor="#000"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/picture"
+            android:layout_toLeftOf="@id/leftIcon"
             android:layout_marginRight="10dp"
             android:textSize="17sp"/>
 
@@ -22,7 +22,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/premier"
-            android:id="@+id/picture"
+            android:id="@+id/leftIcon"
             android:layout_toLeftOf="@id/scoreLeft"
             android:layout_marginRight="20dp"/>
 
@@ -61,7 +61,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/premier"
-            android:id="@+id/pictureRight"
+            android:id="@+id/right_icon"
             android:layout_toRightOf="@id/scoreRight"
             android:layout_marginLeft="20dp"/>
 
@@ -72,7 +72,7 @@
             android:id="@+id/teamNameRight"
             android:textColor="#000"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/pictureRight"
+            android:layout_toRightOf="@id/right_icon"
             android:layout_marginLeft="10dp"
             android:textSize="17sp"/>
 
