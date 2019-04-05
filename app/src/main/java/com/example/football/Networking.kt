@@ -3,6 +3,10 @@ package com.example.football
 import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
+import java.util.Arrays.asList
+
+
 
 
 
@@ -47,7 +51,13 @@ class Networking {
                         netobj.rightscoreDatabase.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("goalsAwayTeam"))
                         netobj.homeTeamId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("homeTeam_id"))
                         netobj.awayTeamId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("awayTeam_id"))
+
+
                     }
+                }
+
+                for (index in 0 until netobj.leftclubNameDatabase.size){
+                    netobj.lefticonDatabase.add("")
                 }
             }
             catch (e: JSONException) {
@@ -57,7 +67,7 @@ class Networking {
             return netobj
         }
 
-        fun getImagesWithJson(jsonObject: JSONObject): Networking {
+        fun getImagesWithJson(jsonObject: JSONObject, index: Int): Networking {
 
 
 
@@ -68,7 +78,11 @@ class Networking {
                     val key = keys.next() as String
                     if (jsonObject.getJSONObject("api").getJSONObject("teams").get(key) is JSONObject) {
 
-                        netobj.lefticonDatabase.add(jsonObject.getJSONObject("api").getJSONObject("teams").getJSONObject(key).getString("logo"))
+
+                        netobj.lefticonDatabase.add(index,jsonObject.getJSONObject("api").getJSONObject("teams").getJSONObject(key).getString("logo"))
+                        Log.d(TAG, ""+ netobj.getLeftIcon(index))
+
+
 
                     }
 

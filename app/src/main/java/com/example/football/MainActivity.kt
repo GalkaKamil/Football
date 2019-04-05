@@ -98,7 +98,10 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG,"url = "+url)
         var client = AsyncHttpClient()
+        var count: Int = 0
         for (index in 0 until netobj.getHomeTeamId().size) {
+
+
 
             netobj.pickTeamUrl(netobj.getHomeTeamId(index))
             url = netobj.getUrl()
@@ -108,14 +111,19 @@ class MainActivity : AppCompatActivity() {
                 override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
 
 
-                    netobj = Networking.getImagesWithJson(response!!)
+                    netobj = Networking.getImagesWithJson(response!!, index)
 
 
 
+                    count++
+                    if(count==10){
 
 
-                    //url=netobj.getUrl()
-                    //letsDoNetworkingForRightImage()
+                        for (index2 in 0 until netobj.getHomeTeamId().size) {
+                            Log.d(TAG, "" + netobj.getHomeTeamId( index2))
+                            Log.d(TAG, "" + netobj.getLeftIcon(index2))
+                        }
+                    }
 
 
 
@@ -132,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
             })
         }
-       // Log.d(TAG, " " + netobj.getLeftIcon(2))
+
     }
 
     private fun letsDoNetworkingForRightImage() {
@@ -145,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
 
                 if (response != null) {
-                    netobj = Networking.getImagesWithJson(response)
+                    netobj = Networking.getImagesWithJson(response,0)
                     initArrays(netobj)
                 }
 
