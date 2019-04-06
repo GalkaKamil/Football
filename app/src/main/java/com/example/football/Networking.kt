@@ -5,12 +5,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import java.util.Arrays.asList
-
-
-
-
-
-
+import kotlin.collections.ArrayList
 
 
 class Networking {
@@ -19,12 +14,14 @@ class Networking {
 
     private var awayTeamId: ArrayList<String> = ArrayList()
     private var homeTeamId: ArrayList<String> = ArrayList()
+    private var leaugeId: ArrayList<String> = ArrayList()
     private var leftclubNameDatabase: ArrayList<String> = ArrayList()
     private var lefticonDatabase: ArrayList<String> = ArrayList()
     private var leftscoreDatabase: ArrayList<String> = ArrayList()
     private var rightclubNameDatabase: ArrayList<String> = ArrayList()
     private var righticonDatabase: ArrayList<String> = ArrayList()
     private var rightscoreDatabase: ArrayList<String> = ArrayList()
+
 
 
 
@@ -39,6 +36,8 @@ class Networking {
 
             try {
                 val keys = jsonObject.getJSONObject("api").getJSONObject("fixtures").keys()
+                var index: Int = 0
+                var count: Int = 0
 
                 while (keys.hasNext()) {
                     val key = keys.next() as String
@@ -52,9 +51,25 @@ class Networking {
                         netobj.homeTeamId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("homeTeam_id"))
                         netobj.awayTeamId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("awayTeam_id"))
 
+                        if(index == 0 ){
+                            netobj.leaugeId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("league_id"))
+                            Log.d(TAG, "index 0 - id = "+jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("league_id"))
+                            index++
+                        }
+
+                        if(netobj.getLeaugeId(count) != jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("league_id")){
+
+                            netobj.leaugeId.add(jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("league_id"))
+                            Log.d(TAG, "id "+jsonObject.getJSONObject("api").getJSONObject("fixtures").getJSONObject(key).getString("league_id"))
+                            Log.d(TAG, "rozmiar "+netobj.leaugeId.size)
+                            count++
+                        }
 
                     }
                 }
+
+
+                Log.d(TAG, ""+netobj.leaugeId.size)
 
                 for (index in 0 until netobj.leftclubNameDatabase.size){
                     netobj.lefticonDatabase.add("")
@@ -67,25 +82,32 @@ class Networking {
             return netobj
         }
 
-        fun getImagesWithJson(jsonObject: JSONObject, index: Int): Networking {
+        fun getImagesWithJson(jsonObject: JSONObject): Networking {
 
 
 
             try {
                 val keys = jsonObject.getJSONObject("api").getJSONObject("teams").keys()
 
+                while (keys.hasNext()){
 
                     val key = keys.next() as String
+
                     if (jsonObject.getJSONObject("api").getJSONObject("teams").get(key) is JSONObject) {
 
+                        for (index in 0 until netobj.leftclubNameDatabase.size){
 
-                        netobj.lefticonDatabase.add(index,jsonObject.getJSONObject("api").getJSONObject("teams").getJSONObject(key).getString("logo"))
-                        Log.d(TAG, ""+ netobj.getLeftIcon(index))
+                            if(jsonObject.getJSONObject("api").getJSONObject("teams").getJSONObject(key).getString("team_id")== netobj.getHomeTeamId(index))
+                            {
+                                netobj.lefticonDatabase.add(index,jsonObject.getJSONObject("api").getJSONObject("teams").getJSONObject(key).getString("logo"))
+                                Log.d(TAG, "dodano do lefticonDatabse link : " + netobj.getLeftIcon(index) + " na pozycje $index")
+                                Log.d(TAG, "dodano do leftclubNameDatabase nazwe klubu : " + netobj.leftclubNameDatabase[index] + "na pozycje $index")
 
-
+                            }
+                        }
 
                     }
-
+                }
             }
             catch (e: JSONException) {
                 e.printStackTrace()
@@ -102,9 +124,9 @@ class Networking {
         url= "https://www.api-football.com/demo/api/fixtures/date/$date"
     }
 
-    fun pickTeamUrl(team: String){
+    fun pickLeagueUrl(leagueId: String){
 
-        url = "https://www.api-football.com/demo/api/teams/team/$team"
+        url = "https://www.api-football.com/demo/api/teams/league/$leagueId"
     }
 
     fun getUrl():String{
@@ -166,6 +188,18 @@ class Networking {
 
         return rightscoreDatabase[index]
     }
+
+    fun getLeaugeId(index: Int):String{
+
+        return leaugeId[index]
+    }
+
+    fun getLeaugeId():ArrayList<String>{
+
+        return leaugeId
+    }
+
+
 
 
 

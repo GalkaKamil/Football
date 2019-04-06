@@ -76,9 +76,6 @@ class MainActivity : AppCompatActivity() {
                 // called when response HTTP status is "200 OK"
                 Log.d(TAG, "JSON11111111: " + response!!.toString())
                 netobj = Networking.getClubNameScoreIdWithJson(response)
-                Log.d(TAG, "HomeTeamId" + netobj.getHomeTeamId(0))
-
-                Log.d(TAG, "HomeTeamId" + netobj.getHomeTeamId(1))
 
                 letsDoNetworkingForLeftImage()
 
@@ -99,11 +96,11 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG,"url = "+url)
         var client = AsyncHttpClient()
         var count: Int = 0
-        for (index in 0 until netobj.getHomeTeamId().size) {
+        for (index in 0 until netobj.getLeaugeId().size) {
 
 
 
-            netobj.pickTeamUrl(netobj.getHomeTeamId(index))
+            netobj.pickLeagueUrl(netobj.getLeaugeId(index))
             url = netobj.getUrl()
 
             client.get(url, object : JsonHttpResponseHandler() {
@@ -111,19 +108,30 @@ class MainActivity : AppCompatActivity() {
                 override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
 
 
-                    netobj = Networking.getImagesWithJson(response!!, index)
+                    Log.d(TAG, "RESPONSE = " + response.toString())
+                    netobj = Networking.getImagesWithJson(response!!)
 
 
 
                     count++
-                    if(count==10){
+                    if(count==netobj.getLeaugeId().size){
 
+                        Log.d(TAG, "-------------------------------------")
 
-                        for (index2 in 0 until netobj.getHomeTeamId().size) {
-                            Log.d(TAG, "" + netobj.getHomeTeamId( index2))
-                            Log.d(TAG, "" + netobj.getLeftIcon(index2))
-                        }
+                        Log.d(TAG, "na pozycji 0 " + netobj.getLeftIcon(0))
+                        Log.d(TAG, "na pozycji 1 " + netobj.getLeftIcon(1))
+                        Log.d(TAG, "na pozycji 2 " + netobj.getLeftIcon(2))
+                        Log.d(TAG, "na pozycji 3 " + netobj.getLeftIcon(3))
+                        Log.d(TAG, "na pozycji 4 " + netobj.getLeftIcon(4))
+                        Log.d(TAG, "na pozycji 5 " + netobj.getLeftIcon(5))
+                        Log.d(TAG, "na pozycji 6 " + netobj.getLeftIcon(6))
+                        Log.d(TAG, "na pozycji 7 " + netobj.getLeftIcon(7))
+                        Log.d(TAG, "na pozycji 8 " + netobj.getLeftIcon(8))
+                        Log.d(TAG, "na pozycji 9 " + netobj.getLeftIcon(9))
+                        Log.d(TAG, "na pozycji 10 " + netobj.getLeftIcon(10))
+
                     }
+
 
 
 
@@ -153,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
 
                 if (response != null) {
-                    netobj = Networking.getImagesWithJson(response,0)
+                    netobj = Networking.getImagesWithJson(response)
                     initArrays(netobj)
                 }
 
