@@ -3,9 +3,6 @@ package com.example.football
 import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
-import java.util.Arrays.asList
-import kotlin.collections.ArrayList
 
 
 class Networking {
@@ -122,6 +119,8 @@ class Networking {
     fun pickDateUrl(date: String){
 
         url= "https://www.api-football.com/demo/api/fixtures/date/$date"
+
+
     }
 
     fun pickLeagueUrl(leagueId: String){

@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Toast
+import com.example.football.data.remotemodel.fixtures.Fixture
+import com.example.football.data.repository.FootballDataSource
+import com.example.football.data.repository.FootballRepositoryImpl
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.JsonHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var leftScoreDatabase: ArrayList<String> = ArrayList()
     private var rightScoreDatabase: ArrayList<String> = ArrayList()
     private val TAG: String = "MainActivity"
-    lateinit var  netobj:Networking
+    lateinit var netobj: Networking
 
 
     @SuppressLint("ResourceType")
@@ -57,6 +60,17 @@ class MainActivity : AppCompatActivity() {
         networking.pickDateUrl(date)
         url = networking.getUrl()
         letsDoSomeNetworing()
+
+        val footballRepositoryImpl = FootballRepositoryImpl()
+        footballRepositoryImpl.getFixturesByDate("2018-02-24", object : FootballDataSource.GetFixturesCallback {
+            override fun onDataLoaded(list: List<Fixture>) {
+
+            }
+
+            override fun onError(throwable: Throwable) {
+
+            }
+        })
     }
 
     private fun letsDoSomeNetworing() {
@@ -93,11 +107,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun letsDoNetworkingForLeftImage() {
 
-        Log.d(TAG,"url = "+url)
+        Log.d(TAG, "url = " + url)
         var client = AsyncHttpClient()
         var count: Int = 0
         for (index in 0 until netobj.getLeaugeId().size) {
-
 
 
             netobj.pickLeagueUrl(netobj.getLeaugeId(index))
@@ -114,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 
 
                     count++
-                    if(count==netobj.getLeaugeId().size){
+                    if (count == netobj.getLeaugeId().size) {
 
                         Log.d(TAG, "-------------------------------------")
 
@@ -131,9 +144,6 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "na pozycji 10 " + netobj.getLeftIcon(10))
 
                     }
-
-
-
 
 
                 }
@@ -153,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun letsDoNetworkingForRightImage() {
 
-        Log.d(TAG,"url = "+url)
+        Log.d(TAG, "url = " + url)
         var client = AsyncHttpClient()
 
         client.get(url, object : JsonHttpResponseHandler() {
@@ -179,8 +189,8 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
     }
+
     private fun initArrays(netobj: Networking) {
 
         for (index in 0 until netobj.getLeftClubName().size) {
@@ -205,7 +215,14 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
     private fun initRecyclerView() {
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(leftclubNameDatabase,righttclubNameDatabase,lefticonDatabase,righticonDatabase,leftScoreDatabase,rightScoreDatabase)
+        viewAdapter = MyAdapter(
+            leftclubNameDatabase,
+            righttclubNameDatabase,
+            lefticonDatabase,
+            righticonDatabase,
+            leftScoreDatabase,
+            rightScoreDatabase
+        )
 
 
 
