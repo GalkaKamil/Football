@@ -20,6 +20,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+
+        finalProduction {
+            dimension "default"
+            applicationId "me.mladenrakonjac.modernandroidapp"
+            resValue "string", "app_name", "Modern App"
+        }
+
+        demoProduction {
+            dimension "default"
+            applicationId "me.mladenrakonjac.modernandroidapp.demoproduction"
+            resValue "string", "app_name", "Modern App Demo P"
+        }
+
+        demoTesting {
+            dimension "default"
+            applicationId "me.mladenrakonjac.modernandroidapp.demotesting"
+            resValue "string", "app_name", "Modern App Demo T"
+        }
+
+
+        mock {
+            dimension "default"
+            applicationId "me.mladenrakonjac.modernandroidapp.mock"
+            resValue "string", "app_name", "Modern App Mock"
+        }
+    }
 }
 
 dependencies {
